@@ -1,0 +1,46 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: tesla-client-deployment
+  namespace: {{ .Values.k8s_namespace }}
+spec:
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: tesla-client-deployment
+  template:
+    metadata:
+      labels:
+        app: tesla-client-deployment
+    spec:
+      containers:
+      - env:
+        envFrom:
+        - configMapRef:
+            name: tesla-client-configmap
+        image: {{ .Values.image }}
+        imagePullPolicy: IfNotPresent
+        name: tesla-client-deployment
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "0"
+            memory: "0"
+          requests:
+            cpu: "0"
+            memory: "0"
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+      securityContext:
+        runAsUser: 0
+      volumes:
+      - hostPath:
+          path: /var/run/docker.sock
+          type: ""
+        name: docker-sock
+        
