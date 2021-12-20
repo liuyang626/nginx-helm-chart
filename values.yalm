@@ -1,6 +1,2 @@
-# 项目AK（服务端项目明细中查找）
-access_ak: test
-# 项目SK（服务端项目明细中查找）
-secret_key: test
 # 客户端镜像地址
-image: tesla-registry.cn-zhangjiakou.cr.aliyuncs.com/tesla_online/tesla-client:1.8.10.3
+image: bitnami/nginx:1.21.3-debian-10-r0
